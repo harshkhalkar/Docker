@@ -45,6 +45,8 @@ This is a simple Flask application running inside Docker, connected to a MySQL d
      "message": "Hello from Flask + MySQL!"
    }
    ```
+---
+
 ## Docker Components
 
 ### Flask App (`flask-app`)
