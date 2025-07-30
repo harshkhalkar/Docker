@@ -1,0 +1,1204 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Docker</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+	margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.highlight-default_background {
+	color: rgba(50, 48, 44, 1);
+}
+.highlight-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.highlight-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(115, 114, 110, 1);
+	fill: rgba(115, 114, 110, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(205, 60, 58, 1);
+	fill: rgba(205, 60, 58, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(248, 248, 247, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(248, 243, 252, 1);
+}
+.block-color-pink_background {
+	background: rgba(252, 241, 246, 1);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-default { background-color: rgba(84, 72, 49, 0.08); }
+.select-value-color-gray { background-color: rgba(84, 72, 49, 0.15); }
+.select-value-color-brown { background-color: rgba(210, 162, 141, 0.35); }
+.select-value-color-orange { background-color: rgba(224, 124, 57, 0.27); }
+.select-value-color-yellow { background-color: rgba(236, 191, 66, 0.39); }
+.select-value-color-green { background-color: rgba(123, 183, 129, 0.27); }
+.select-value-color-blue { background-color: rgba(93, 165, 206, 0.27); }
+.select-value-color-purple { background-color: rgba(168, 129, 197, 0.27); }
+.select-value-color-pink { background-color: rgba(225, 136, 179, 0.27); }
+.select-value-color-red { background-color: rgba(244, 171, 159, 0.4); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="22bb5532-cba4-80d2-95b8-e852eb3b4934" class="page sans"><header><div class="page-header-icon undefined"><img class="icon" src="icons8-docker_(1).svg"/></div><h1 class="page-title">Docker</h1><p class="page-description"></p></header><div class="page-body"><h1 id="23fb5532-cba4-80cc-a368-e847f91658be" class=""><mark class="highlight-blue"><strong>Docker</strong></mark></h1><ul id="235b5532-cba4-804a-826b-d8549027585c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong> What is Docker?</strong></mark></li></ul><p id="235b5532-cba4-8093-af7f-dd92527fa437" class="">Docker is Open-Source containerization platform that enables developers and organizations to build, deploy, and manage application in isolated environments, ensuring consistency, and efficiency across various computing environments.</p><ul id="235b5532-cba4-801f-a2d6-c8fedc3a9f62" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong> Difference between Virtualization &amp; Containerization?</strong></mark><ul id="235b5532-cba4-8021-9301-ff1fc75726c3" class="bulleted-list"><li style="list-style-type:circle">Virtualization : <ul id="235b5532-cba4-805e-811f-d07d79491b75" class="bulleted-list"><li style="list-style-type:square">It involves creating virtual machine (VM) that run a full operating system on top of physical machine.</li></ul><ul id="235b5532-cba4-8082-8582-f5de993b56c6" class="bulleted-list"><li style="list-style-type:square">How it works : A hypervisor runs on the physical hardware and allows multiple VM’s to operate on single machine.</li></ul><ul id="235b5532-cba4-8062-af24-fa0715feeeac" class="bulleted-list"><li style="list-style-type:square">Isolation Level is strong each VM is completely isolated with its own OS and Resources.</li></ul><ul id="235b5532-cba4-80af-8158-f67fb586fd49" class="bulleted-list"><li style="list-style-type:square">Tools :- VMware, Hyper-V, VirtualBox.</li></ul></li></ul><ul id="235b5532-cba4-80c4-a52b-fc15c022ea98" class="bulleted-list"><li style="list-style-type:circle">Containerization :<ul id="235b5532-cba4-8021-9b65-c51227b1130f" class="bulleted-list"><li style="list-style-type:square">It Shares the Operating System (OS).</li></ul><ul id="235b5532-cba4-80f9-a221-cbba97e99e59" class="bulleted-list"><li style="list-style-type:square">It involves packaging an application and it dependencies into a container. Which runs on one operating system and provide isolation.</li></ul><ul id="235b5532-cba4-8026-a42c-d21267ec2bd6" class="bulleted-list"><li style="list-style-type:square">How it works : Container share the host OS but isolate the application environment using kernel features like namespace and cgroups.</li></ul><ul id="235b5532-cba4-8054-bbbe-c81d190f1674" class="bulleted-list"><li style="list-style-type:square">Isolation Level, Process-Level. Isolation not as strong as VM but sufficient.  </li></ul><ul id="235b5532-cba4-8027-b2a7-f77217572d1d" class="bulleted-list"><li style="list-style-type:square">Tools :- Docker, Podman, Containerd.</li></ul></li></ul></li></ul><ul id="235b5532-cba4-80bf-99cb-cda95186bb7e" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong> Why use Docker?</strong></mark><ul id="235b5532-cba4-80dd-8a75-e15c0dc037b8" class="bulleted-list"><li style="list-style-type:circle">Consistency Across Environments: Ensures your app runs the same on dev, test, and production.</li></ul><ul id="235b5532-cba4-807b-9417-caa340e348f6" class="bulleted-list"><li style="list-style-type:circle">Lightweight: Container share the host OS kernel.</li></ul><ul id="235b5532-cba4-803b-ad94-c7713596f4d8" class="bulleted-list"><li style="list-style-type:circle">Portability: Once built, Docker Containers can run anywhere. (On-Premises, Cloud, or Hybrid environments)</li></ul></li></ul><ul id="235b5532-cba4-8006-9b85-d6eadca944dd" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong> Core Components of Docker</strong></mark><mark class="highlight-blue">.</mark><ul id="235b5532-cba4-80e7-b9bd-e66246b87d59" class="bulleted-list"><li style="list-style-type:circle">Docker Engine - Runtime that builds and runs containers.</li></ul><ul id="235b5532-cba4-8011-b808-f7962b55cd95" class="bulleted-list"><li style="list-style-type:circle">Docker Images - Templates used to create containers.</li></ul><ul id="235b5532-cba4-80b4-8c86-f8dec6079dbe" class="bulleted-list"><li style="list-style-type:circle">Docker Containers - Lightweight, executable packages of software.</li></ul><ul id="235b5532-cba4-80b3-b072-c7a91e346d1c" class="bulleted-list"><li style="list-style-type:circle">Dockerfile - Script with instruction to build a Docker image.</li></ul><ul id="235b5532-cba4-804a-af00-dde9b8b884b1" class="bulleted-list"><li style="list-style-type:circle">Docker Hub - Cloud based registry service for shareing and storing Docker images.</li></ul><ul id="235b5532-cba4-8083-bd25-f63e88372941" class="bulleted-list"><li style="list-style-type:circle">Docker Compose - Running multi-container Docker  applications using YAML/DockerCompose files.</li></ul></li></ul><ul id="235b5532-cba4-809e-8867-de437a9d5b3c" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>Advantages of Docker Over Virtual Machines</strong></mark></li></ul><table id="235b5532-cba4-8039-8139-ebe8a03a6bac" class="simple-table"><thead class="simple-table-header"><tr id="235b5532-cba4-80f2-a911-e75127595123"><th id="l[Lj" class="simple-table-header-color simple-table-header">Feature</th><th id="NpkD" class="simple-table-header-color simple-table-header">Virtual Machines</th><th id="V|ml" class="simple-table-header-color simple-table-header">Docker Containers</th></tr></thead><tbody><tr id="235b5532-cba4-8030-8af0-e4001512245d"><td id="l[Lj" class="">Boot Time</td><td id="NpkD" class="">Minutes</td><td id="V|ml" class="">Seconds</td></tr><tr id="235b5532-cba4-80e1-b9cf-ed9b21931b4f"><td id="l[Lj" class="">Resource Usage</td><td id="NpkD" class="">Heavy (OS per VM)</td><td id="V|ml" class="">Lightweight (shared OS)</td></tr><tr id="235b5532-cba4-8056-9c70-dce527501556"><td id="l[Lj" class="">Performance</td><td id="NpkD" class="">Less efficient</td><td id="V|ml" class="">Near-native</td></tr><tr id="235b5532-cba4-802f-bbf2-d76491502a4f"><td id="l[Lj" class="">Portability</td><td id="NpkD" class="">Limited (dependent on hypervisor)</td><td id="V|ml" class="">High (runs anywhere Docker is supported)</td></tr><tr id="235b5532-cba4-80d3-a26e-ea68679f321e"><td id="l[Lj" class="">Image Size</td><td id="NpkD" class="">Large (GBs)</td><td id="V|ml" class="">Small (MBs to low GBs)</td></tr></tbody></table><hr id="23fb5532-cba4-8018-8efd-f66ecb97b996"/><h1 id="235b5532-cba4-800d-80b8-f0af8bc2e23f" class=""><mark class="highlight-blue"><strong>Docker &amp; Docker Compose Installation.</strong></mark></h1><p id="235b5532-cba4-80f7-902b-f95a22d88c26" class="">RHEL-based systems</p><p id="235b5532-cba4-805d-8b09-ca53e313ef50" class="">•<code>sudo yum update -y / sudo dnf update -y</code></p><p id="235b5532-cba4-80b3-9860-ef6b14d3c9cb" class="">•<code>sudo yum install docker -y</code></p><p id="235b5532-cba4-8013-a974-f2e1ad2dd30d" class="">•<code>sudo systemctl start docker</code></p><p id="235b5532-cba4-8006-a86a-d934523a76b3" class="">•<code>sudo systemctl enable docker</code></p><p id="235b5532-cba4-80a8-aab2-f9d98152aa76" class="">Debian-based systems</p><p id="235b5532-cba4-8003-828a-fa79a7fb7893" class="">•<code>sudo apt update -y</code></p><p id="235b5532-cba4-8000-972f-c398aaeb01c1" class="">•<code>sudo apt install docker.io -y</code></p><p id="235b5532-cba4-8066-b7df-e2d42f67ef8d" class="">•<code>sudo systemctl start docker</code></p><p id="235b5532-cba4-8054-b856-e52f43e3dae5" class="">•<code>sudo systemctl enable docker</code></p><p id="235b5532-cba4-80af-9043-eed850fa3dd8" class="">
+</p><p id="235b5532-cba4-8025-8d0a-c89f017d8f9d" class="">Docker-Compose</p><p id="235b5532-cba4-808d-bfc8-f29fd0377b59" class="">•<code>sudo curl -L &quot;https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)&quot; -o /usr/local/bin/docker-compose</code></p><p id="235b5532-cba4-8073-aa06-e8fa21e53a60" class="">•<code>sudo chmod +x /usr/local/bin/docker-compose</code></p><p id="235b5532-cba4-80ca-bacf-c4a22708ca44" class="">
+</p><p id="235b5532-cba4-8075-81e2-c4671f149da4" class="">Optional -</p><p id="235b5532-cba4-80e5-a894-ce1111eef697" class="">•<code>sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose</code></p><p id="235b5532-cba4-80c3-8489-f39e91a6172b" class="">
+</p><p id="235b5532-cba4-8006-9b5f-e0a4b350b313" class=""><strong>Verify Installation -</strong></p><p id="235b5532-cba4-8097-b178-dba2d529f2ce" class="">•<code>docker —-version</code></p><p id="235b5532-cba4-80fd-8689-d8caf8250aeb" class="">•<code>docker-compose —-version</code></p><hr id="235b5532-cba4-803e-bc70-f024affb8eac"/><h1 id="235b5532-cba4-80b6-bd41-d923e5264c49" class=""><mark class="highlight-blue"><strong>Docker Commands</strong></mark></h1><p id="235b5532-cba4-8086-877b-ecce25f6cb16" class="">•<code>docker ps</code> / <code>docker container ls</code></p><p id="235b5532-cba4-80a9-9af4-dacfc31de7f2" class="">Purpose: Lists running containers.</p><p id="235b5532-cba4-800e-a83e-d075ebbdf0bc" class="">Flags:<div class="indented"><p id="235b5532-cba4-80cb-83a2-c297aee7445a" class=""><code>-a</code>: Show all containers (default shows only running container)</p><p id="235b5532-cba4-803f-ad66-ff0c323b75e9" class=""><code>-q</code>: List only container IDs</p><p id="235b5532-cba4-8072-8eb5-e5632ffc1845" class=""><code>-s</code>: Shows filesystem size for each container</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="235b5532-cba4-80ff-8193-cdd5ab6a2a23" class="code"><code class="language-Bash">docker ps                      # docker container ls ## both works same
+docker ps -s
+docker stop $(docker ps -aq)   # this will stop all runing containers</code></pre><p id="235b5532-cba4-80dc-abcb-ea643177eff1" class="">•<code>docker images</code> / <code>docker image ls</code></p><p id="235b5532-cba4-8033-85cb-fdfa2b45a5bf" class="">Purpose: List local images.</p><p id="235b5532-cba4-80ce-9501-e51e8b6fff9d" class="">Flags:<div class="indented"><p id="235b5532-cba4-8006-98dd-e24b79661fb8" class=""><code>-a</code>: Shows all images</p><p id="235b5532-cba4-804f-9c0e-de22ed5a9248" class=""><code>-q</code>: Only display image IDs</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="235b5532-cba4-8050-9a0c-de1b7d764ccd" class="code"><code class="language-Bash">docker images
+docker rmi $(docker images -aq) # this will remove/delete all the local images</code></pre><p id="235b5532-cba4-80fa-a477-f68af9f736eb" class="">•<code>docker search &lt;img-name&gt;</code></p><p id="236b5532-cba4-809c-9b27-c41b16351ff4" class="">Purpose: Search for images on Docker Hub.</p><p id="236b5532-cba4-80ec-87df-ff55ccbe077e" class="">Flags:<div class="indented"><p id="236b5532-cba4-80f8-a47b-eee2810df922" class=""><code>--limit &lt;number&gt;</code>: Limits the numbers of results.</p><p id="236b5532-cba4-8079-bb39-c4e5718177f5" class=""><code>--filter is-official=true</code>: Shows only official images.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80be-a20f-ecd05a17d00c" class="code"><code class="language-Bash">docker search busybox</code></pre><p id="235b5532-cba4-80c0-88aa-d95dacb8028a" class="">•<code>docker pull &lt;img-name&gt;</code></p><p id="236b5532-cba4-80ec-bbc7-e03aa742dbb3" class="">Purpose: Download an image from Docker Hub.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8091-ba2a-fcf1faaa9c53" class="code"><code class="language-Bash">docker pull nginx</code></pre><p id="235b5532-cba4-8086-a6b6-ec9f7976398e" class="">•<code>docker create</code></p><p id="236b5532-cba4-8013-9833-fbfc27e13f5f" class="">Purpose: Create a container from an image (but in stop state, use start command to get it running)</p><p id="236b5532-cba4-80bd-a840-c752b7e9fd69" class="">Flags:<div class="indented"><p id="236b5532-cba4-802e-b2df-d73c53269ef1" class=""><code>--name &lt;container-name&gt;</code>: Assign a name to the container.</p><p id="236b5532-cba4-804e-9cd3-f4d0781109ac" class=""><code>-p &lt;host-port&gt;:&lt;container-port&gt;</code>:  Bind container port to a port on the host.</p><p id="236b5532-cba4-8074-85e1-d1b78f6e8aa8" class=""><code>-v &lt;host&gt;:&lt;container&gt;</code>: Volume mount.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8009-b03d-c4c7787618ac" class="code"><code class="language-Bash">docker create --name web httpd</code></pre><p id="235b5532-cba4-8044-8c58-eb0a85eb7b69" class="">•<code>docker start &lt;container-id&gt;</code></p><p id="236b5532-cba4-8081-9e29-c013810ca302" class="">Purpose: Start a stopped container.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8057-b138-dd0f908b3cc5" class="code"><code class="language-Bash">docker start web</code></pre><p id="235b5532-cba4-805f-898b-f43912c9ae87" class="">•<code>docker stop &lt;container-id&gt;</code></p><p id="236b5532-cba4-80c3-93d2-c46b6fb4a97b" class="">Purpose: Stop a running container gracefully.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8089-9b2d-f0caad3dfe0d" class="code"><code class="language-Bash">docker stop web</code></pre><p id="235b5532-cba4-8052-802e-dc98f100bd1a" class="">•<code>docker rm &lt;container-id&gt;</code></p><p id="236b5532-cba4-8009-b1a8-c495e49a82e1" class="">Purpose: Remove one or more stopped containers.</p><p id="236b5532-cba4-802e-8c3d-d7f0e68ef644" class="">Flag:<div class="indented"><p id="236b5532-cba4-80e2-80c1-d0d263a45cab" class="">-f: Force removal of a running container.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8057-94f7-ebd78944968d" class="code"><code class="language-Bash">docker rm web</code></pre><p id="235b5532-cba4-805f-a355-cc2e90e63a39" class="">•<code>docker rmi &lt;image-id&gt;</code></p><p id="236b5532-cba4-807d-8ab0-f46f30b75e78" class="">Purpose: Remove one or more Docker images.<br/>Flag:<br/><div class="indented"><p id="236b5532-cba4-8052-8431-c894637ef610" class=""><code>-f</code>: Force removal even if image is used by containers.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8093-8019-daecd510fcfd" class="code"><code class="language-Bash">docker rmi httpd</code></pre><p id="235b5532-cba4-80a5-9f35-dd5b43c664fd" class="">•<code>docker run -d</code> </p><p id="236b5532-cba4-8018-8972-fa113e2ea1e4" class="">Purpose: Run a container from an image in detached mode (in the background).<br/>Flags:<br/><div class="indented"><p id="236b5532-cba4-80d6-a2b2-c26cfd0d4610" class=""><code>-d</code>: Run in detached mode.</p><p id="236b5532-cba4-8023-ba8a-e4930a8e1499" class=""><code>--name &lt;container-name&gt;</code>: Assign a name to the container.</p><p id="236b5532-cba4-8024-9f3c-fe0023106235" class=""><code>-p &lt;host-port&gt;:&lt;container-port&gt;</code>:  Map Ports.</p><p id="236b5532-cba4-8073-82ff-de31f7b67804" class=""><code>-v &lt;host&gt;:&lt;container&gt;</code>: Volume mount.</p><p id="236b5532-cba4-8063-af72-f3aa3d5033ca" class=""><code>-e &lt;key&gt;:&lt;value&gt;</code>: Set environment variables in the container. If any.</p><p id="236b5532-cba4-8059-89c2-c8f235c52a9d" class=""><code>--network &lt;network-name&gt;</code>: Connect the container to a user-defined Docker network.</p><p id="236b5532-cba4-80e6-bb7e-f18a08414c5c" class=""><code>--restart &lt;policy&gt;</code>: Restart policy. (no, on-failure, always, unless-stopped)</p><p id="236b5532-cba4-8051-b239-d6b30b35dd27" class=""><code>--env-file &lt;file.env&gt;</code>: Load environment variables from a file. (Create a .env file)</p><p id="236b5532-cba4-8014-ab75-ef1b21fe1a93" class=""><code>--cpus &lt;value&gt;</code>: Limit number of CPUs the container can use.</p><p id="236b5532-cba4-8035-b6ad-e04111198173" class=""><code>-m &lt;value&gt;</code>: Set a memory limit for the container (e.g., 512m, 1g).</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8057-be43-c3cda641f170" class="code"><code class="language-Bash">docker run -d --name database -e MYSQL_ROOT_PASSWORD=12345 mysql
+docker run -d --env-file sql.env --name database mysql</code></pre><p id="235b5532-cba4-80f2-afae-f68d97d0ff9a" class="">•<code>docker exec -it &lt;container-id&gt; bash</code></p><p id="236b5532-cba4-804d-94ad-c92df2d8a6dd" class="">Purpose: Run a command in a running container (interactively).<br/>Flags:<br/><div class="indented"><p id="236b5532-cba4-805e-b49a-c16af272f2cb" class=""><code>-i</code>: Interactive Mode.</p><p id="236b5532-cba4-80fd-928c-e64b82bdb9e6" class=""><code>-t</code>: Allocate a pseudo-TTY/Terminal.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80d0-8b0a-f7b68b0966ec" class="code"><code class="language-Bash">docker exec -it web /bin/bash</code></pre><p id="235b5532-cba4-804a-aa9b-fb369d9149ad" class="">•<code>docker commit &lt;container-id&gt; &lt;name-image&gt;</code></p><p id="236b5532-cba4-806b-b6fb-e32f787a8b18" class="">Purpose: Create a new image from a container.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8038-b838-edad2003688c" class="code"><code class="language-Bash">docker commit web custom-nginx:v1</code></pre><p id="235b5532-cba4-806b-b6d9-cdb67685feda" class="">•<code>docker save -o &lt;file.tar&gt; &lt;img-name:tag&gt;</code></p><p id="236b5532-cba4-8003-b86c-cff7ab6591b0" class="">Purpose: Save an image to a tar archive file.<br/>Flag:<br/><div class="indented"><p id="236b5532-cba4-80ff-854a-f1ddfeedbaf3" class=""><code>-o &lt;file.tar&gt;</code>: Output filename.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80bf-a322-f94bf2df27ee" class="code"><code class="language-Bash">docker save -o nginx.tar nginx:latest</code></pre><p id="235b5532-cba4-8002-afae-ef16d585adae" class="">•<code>docker load -i &lt;file.tar&gt;</code></p><p id="236b5532-cba4-80f0-b202-ecc524b77ffe" class="">Purpose: Load an image from a tar archive.</p><p id="236b5532-cba4-8073-ad4d-f809e2c0be0f" class="">Flag:<div class="indented"><p id="236b5532-cba4-80a8-b755-d1a84df25cf3" class=""><code>-i</code>: Input file</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80ff-9989-f50977d7b63e" class="code"><code class="language-Bash">docker load -i nginx.tar</code></pre><p id="235b5532-cba4-80ec-9cf6-ddc2c4b8ae06" class="">•<code>docker history &lt;image-id&gt;</code></p><p id="236b5532-cba4-80f1-9968-fadadf5ea065" class="">Purpose: Show the history of an image.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-801a-bba2-dbb943ef1ff8" class="code"><code class="language-Bash">docker history nginx</code></pre><p id="235b5532-cba4-8099-84fd-c785b7ca35a2" class="">•<code>docker login -u &lt;username&gt;</code></p><p id="236b5532-cba4-8051-8134-c2d44e246b39" class="">Purpose: Authenticate to a Docker registry.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8063-9def-fc69e1c92adf" class="code"><code class="language-Bash">docker login -u user1</code></pre><p id="235b5532-cba4-80e6-8257-ca99ac72d10a" class="">•<code>docker tag &lt;img-name:tag&gt; &lt;new-name:tag&gt;</code></p><p id="236b5532-cba4-8022-87e6-f0e8618a7b71" class="">Purpose: Tag an image for a specific registry or name.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8010-a200-f364ef4ba348" class="code"><code class="language-Bash">docker tag nginx:latest myregistry.com/mynginx:prod</code></pre><p id="235b5532-cba4-802e-9589-fb34ad1ef817" class="">•<code>docker push</code></p><p id="236b5532-cba4-80ad-8fae-dab867773df9" class="">Purpose: Push an image to a registry.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-806b-838d-c5955527cacf" class="code"><code class="language-Bash">docker push myregistry.com/mynginx:prod</code></pre><p id="235b5532-cba4-8082-8058-d89ba5476303" class="">•<code>docker network</code></p><p id="236b5532-cba4-8053-9223-d2eb26b56f28" class="">Purpose: Manage Docker networks.</p><p id="236b5532-cba4-8047-bb97-da7a73fc1104" class="">Sub-Commands:<div class="indented"><p id="236b5532-cba4-801b-8f1c-cc60baf3b633" class=""><code>ls</code>: List docker networks.</p><p id="236b5532-cba4-8003-ae32-cd5982870a8e" class=""><code>create</code>: Create network. (To define type use —driver)</p><p id="236b5532-cba4-804a-b5c1-cc4b4df0ce6b" class=""><code>rm</code>: Remove created network.</p><p id="236b5532-cba4-801d-9d94-ddaa583c3c41" class=""><code>inspect</code>: To get more details of network.</p><p id="236b5532-cba4-809c-9fa5-d15c9a38f305" class=""><code>connect &lt;network-name&gt; &lt;container-name&gt;</code>: Connect network to container.</p><p id="236b5532-cba4-8005-9024-fb86d128bb39" class=""><code>disconnect &lt;network-name&gt; &lt;container-name&gt;</code>: Disconnect connected network of container.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8089-be8a-fc7f8ba2bd03" class="code"><code class="language-Bash">docker network ls
+docker network create frontend --driver bridge       # by default it create a bridge network, even if not specified --driver</code></pre><p id="235b5532-cba4-8086-a44d-dfcf4848d59c" class="">•<code>docker volume</code></p><p id="236b5532-cba4-805c-8b19-dbcc40946672" class="">Purpose: Manage Docker volumes.<br/>Sub-Commands:<br/><div class="indented"><p id="236b5532-cba4-80ff-a576-fe5423132e9d" class=""><code>ls</code>: List volumes.</p><p id="236b5532-cba4-8029-b92b-fa8340ac7f26" class=""><code>create</code>: Create a new volume.</p><p id="236b5532-cba4-80be-a73b-f9be899f7370" class=""><code>rm</code>: Remove a volume.</p><p id="236b5532-cba4-801e-8fad-dfdb5367e855" class=""><code>inspect</code>: Inspect volume details.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80eb-8d48-d5126eafa40f" class="code"><code class="language-Bash">docker volume ls
+docker volume create my-volume1             # Named Volume
+docker volume inspect my-volume1
+docker volume rm my-volume1</code></pre><p id="235b5532-cba4-80ef-b128-d4ef7de395e4" class="">•<code>docker system prune</code></p><p id="236b5532-cba4-806d-89e7-f95b84c18605" class="">Purpose: Remove all unused containers, networks, images, and optionally volumes.<br/>Flags:<br/><div class="indented"><p id="236b5532-cba4-809d-abd6-ecb0a9621f6c" class=""><code>-a</code>: Remove all unused images.</p><p id="236b5532-cba4-80e2-9b93-db67c348fa91" class=""><code>-f</code>: Do not prompt for confirmation. / Forcefully.</p><p id="236b5532-cba4-807f-9ab2-efa1287b7a74" class=""><code>--volumes</code>: Include volumes in cleanup.</p></div></p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8069-802b-e94ecd8b6df4" class="code"><code class="language-Bash">docker system prune -a --volumes -f</code></pre><p id="235b5532-cba4-80b0-82f1-f83353a63c54" class="">•<code>docker container inspect &lt;container-id&gt;</code></p><p id="236b5532-cba4-8092-88d9-fc9a212a5079" class="">Purpose: Display detailed information on a container in JSON format.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8064-8e22-fa5c1dabe798" class="code"><code class="language-Bash">docker container inspect web</code></pre><p id="236b5532-cba4-80dc-a824-e442f2bc4327" class="">•<code>docker stats &lt;container-id&gt;</code></p><p id="236b5532-cba4-80ed-87f7-e92f603f595b" class="">Purpose: Display a live stream of resource usage statistics (CPU, memory, network, I/O) for containers.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8057-8955-fa2e960ebb0a" class="code"><code class="language-Bash">docker stats web</code></pre><p id="236b5532-cba4-8050-8aec-c6c3dbe828e3" class="">
+</p><p id="236b5532-cba4-80a7-b417-fc75d5e4d13a" class=""><strong>For More Docker Commands &amp; Options</strong></p><p id="236b5532-cba4-80d9-a3a1-ce3d7895b9c3" class="">Official Docker Documentation - <a href="https://docs.docker.com/engine/reference/commandline/docker/">https://docs.docker.com/engine/reference/commandline/docker/</a></p><hr id="235b5532-cba4-8003-8c3f-e99397056b97"/><h1 id="235b5532-cba4-8082-b580-e8aa87496fc0" class=""><mark class="highlight-blue"><strong>Docker Network</strong></mark></h1><p id="235b5532-cba4-80db-810b-f84f7c93307e" class="">Docker network, allows containers to communicate with —each other, host machine, or outside world (internet).</p><p id="235b5532-cba4-802c-8e07-caa0154c1b4d" class="">Types of Docker Networks :-<div class="indented"><table id="235b5532-cba4-80ba-ad86-dad53aaae943" class="simple-table"><thead class="simple-table-header"><tr id="235b5532-cba4-8038-b238-f148d780105c"><th id="jRUq" class="simple-table-header-color simple-table-header"><strong>Driver</strong></th><th id="kxAK" class="simple-table-header-color simple-table-header" style="width:449.98150634765625px"><strong>Description</strong></th></tr></thead><tbody><tr id="235b5532-cba4-80da-8a99-d6fbf7b3dc90"><td id="jRUq" class="">bridge</td><td id="kxAK" class="" style="width:449.98150634765625px">The default network driver.</td></tr><tr id="235b5532-cba4-809d-9752-c0f68cce1e3a"><td id="jRUq" class="">host</td><td id="kxAK" class="" style="width:449.98150634765625px">Remove network isolation between the container and the Docker host.</td></tr><tr id="235b5532-cba4-805a-bf8a-f55c719fa2cf"><td id="jRUq" class="">none</td><td id="kxAK" class="" style="width:449.98150634765625px">Completely isolate a container from the host and other containers.</td></tr><tr id="235b5532-cba4-80a9-a7f8-f24efe348638"><td id="jRUq" class="">overlay</td><td id="kxAK" class="" style="width:449.98150634765625px">Overlay networks connect multiple Docker daemons together.</td></tr><tr id="235b5532-cba4-80ca-b385-cde4df0be6dd"><td id="jRUq" class="">ipvlan</td><td id="kxAK" class="" style="width:449.98150634765625px">IPvlan networks provide full control over both IPv4 and IPv6 addressing.</td></tr><tr id="235b5532-cba4-806d-8b48-e61940e558c7"><td id="jRUq" class="">macvlan</td><td id="kxAK" class="" style="width:449.98150634765625px">Assign a MAC address to a container.</td></tr></tbody></table></div></p><hr id="23fb5532-cba4-80d9-b8de-cb570a9c4647"/><h1 id="235b5532-cba4-80ee-a55f-e4bcecabf569" class=""><mark class="highlight-blue"><strong>Docker Volume</strong></mark></h1><p id="236b5532-cba4-800b-86c8-cc84a341cf67" class="">A Docker volume is a special type of storage used by Docker containers to store data permanently, even if the container is stopped, deleted, or recreated.</p><p id="236b5532-cba4-809f-bed4-db34d81156c7" class="">When you run a container, by default, any data it creates is lost when the container stops. Volumes solve this problem by keeping the data outside the container, in a separate location managed by Docker. This makes it easier to save, share, and back up important data.</p><p id="236b5532-cba4-80ea-8d48-f272a2793cb6" class="">Types of Docker Volumes :-</p><blockquote id="236b5532-cba4-80df-8739-ec2d8f9c347b" class="">Named Volume<p id="236b5532-cba4-806b-bba0-d493fb80e059" class="">• Create and managed by docker</p><p id="236b5532-cba4-8058-94aa-ea022be89899" class="">• Stored in Docker’s default location (/var/lib/docker/volumes/)</p><p id="236b5532-cba4-80ce-acfc-f5a5036effa4" class="">• Can be reused across multiple containers.</p></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8009-889d-d6ed15bc2051" class="code"><code class="language-Bash">docker volume create my-volume
+docker run -d -v my-volume:/app/data my-image</code></pre><blockquote id="236b5532-cba4-8096-a9fc-f0f9b3d730f0" class="">Anonymous Volumes<p id="236b5532-cba4-804a-8586-d8683b98eff1" class="">• Similar to named volumes.</p><p id="236b5532-cba4-809a-b69a-c7f0ff30c70e" class="">• We don’t name it explicitly. Docker gives it a random name.</p><p id="236b5532-cba4-80c0-a2f5-dd52d5bb8ec9" class="">• Harder to manage because you don’t control the name. Less flexible.</p></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80b9-8d7a-fc89b589fed4" class="code"><code class="language-Bash">docker run -d -v /app/data my-image</code></pre><blockquote id="236b5532-cba4-80e5-a864-f2479665031d" class="">Bind Mounts<p id="236b5532-cba4-803f-81f1-d7f3f5bc6451" class="">• Links a specific file or folder from host machine into the container.</p><p id="236b5532-cba4-80bc-9a94-ff6f3ac3d4c8" class="">• Not managed by Docker.</p></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80c3-b955-fb4a506abd06" class="code"><code class="language-Bash">docker run -d -v /host/path:/container/path my-image</code></pre><ul id="235b5532-cba4-80dc-a171-cc7192316e15" class="bulleted-list"><li style="list-style-type:disc"><mark class="highlight-blue"><strong>/var/lib/docker — Docker’s Default Storage Directory</strong></mark></li></ul><p id="235b5532-cba4-8032-ab21-e4319a41cc6e" class="">This is the default data directory where Docker stores all of its persistent data :-<div class="indented"><p id="235b5532-cba4-8076-bc1c-e188a3a75cc7" class="">Images</p><p id="235b5532-cba4-80ce-977f-ddafccbb6369" class="">Containers</p><p id="235b5532-cba4-80ef-b453-d3dfce3e5fa8" class="">Volumes</p><p id="235b5532-cba4-805c-b9c2-d78c74700bd5" class="">Networks</p></div></p><p id="235b5532-cba4-80a3-88ec-cbb2f2acdf76" class="">So essentially, everything Docker runs or builds is stored here, unless configured.</p><hr id="23fb5532-cba4-8000-84b7-f936ca04bedd"/><h1 id="235b5532-cba4-80e6-ae83-eb6cd3715133" class=""><mark class="highlight-blue"><strong>Dockerfile</strong></mark></h1><p id="236b5532-cba4-80d8-8a8f-f6803c61375b" class="">A Dockerfile is a text file that contains instructions on how to build a Docker image. Each instruction in the Dockerfile creates a <strong>layer</strong> in the image.</p><p id="236b5532-cba4-8008-ad42-ebadf1d89511" class="">Basic Structure of a Dockerfile</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80fa-bcfa-e5d886ec542f" class="code"><code class="language-Docker"># Example Dockerfile
+FROM nginx
+WORKDIR /usr/share/nginx/html
+COPY ./html .
+COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 80
+CMD [&quot;nginx&quot;,&quot;-g&quot;,&quot;daemon off;&quot;]</code></pre><p id="236b5532-cba4-8012-ac2f-d14dd34f90ff" class="">Build Dockerfile</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80d1-803e-f11ae13f9259" class="code"><code class="language-Bash">docker build -t nginx-build .
+# if your dockerfile name isn&#x27;t &quot;Dockerfile&quot;
+docker build -f &lt;DockerFile-Name&gt; -t nginx-build .</code></pre><p id="236b5532-cba4-80bb-9528-cefbf8f11ee9" class="">Dockerfile Attributes/Instruction</p><table id="236b5532-cba4-803a-a0da-ffa4da4e2457" class="simple-table"><thead class="simple-table-header"><tr id="236b5532-cba4-807f-a047-c9eabde9d6e5"><th id="L?gb" class="simple-table-header-color simple-table-header"><strong>Instruction</strong></th><th id="ti^g" class="simple-table-header-color simple-table-header"><strong>Description</strong></th><th id="wyK:" class="simple-table-header-color simple-table-header" style="width:326.9884338378906px"><strong>Example</strong></th></tr></thead><tbody><tr id="236b5532-cba4-805b-ad5b-f48bf945928e"><td id="L?gb" class=""><code>FROM</code></td><td id="ti^g" class="">Sets the base image (must be the first instruction).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>FROM ubuntu:22.04</code></td></tr><tr id="236b5532-cba4-80fb-9380-f061955babbe"><td id="L?gb" class=""><code>LABEL</code></td><td id="ti^g" class="">Adds metadata to the image (e.g., maintainer, version).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>LABEL maintainer=&quot;@example.com&quot;</code></td></tr><tr id="236b5532-cba4-80e0-b3c6-ff39657fda53"><td id="L?gb" class=""><code>ENV</code></td><td id="ti^g" class="">Sets environment variables.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>ENV NODE_ENV=production</code></td></tr><tr id="236b5532-cba4-800b-9cac-d3743140d416"><td id="L?gb" class=""><code>WORKDIR</code></td><td id="ti^g" class="">Sets the working directory inside the container.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>WORKDIR /usr/src/app</code></td></tr><tr id="236b5532-cba4-80db-81b4-d30308620118"><td id="L?gb" class=""><code>COPY</code></td><td id="ti^g" class="">Copies files from the host to the container.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>COPY . /app</code></td></tr><tr id="236b5532-cba4-80d8-92be-e7cfbf0df517"><td id="L?gb" class=""><code>ADD</code></td><td id="ti^g" class="">Similar to <code>COPY</code>, but also supports remote URLs and automatic unpacking of compressed files.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>ADD archive.tar.gz /app/</code></td></tr><tr id="236b5532-cba4-800e-8053-c73781a9e4c0"><td id="L?gb" class=""><code>RUN</code></td><td id="ti^g" class="">Executes a command while building the image (e.g., installing packages).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>RUN apt-get update &amp;&amp; apt-get install</code></td></tr><tr id="236b5532-cba4-80a1-bd7b-c9755d32437c"><td id="L?gb" class=""><code>CMD</code></td><td id="ti^g" class="">Sets the default command to run when the container starts (can be overridden).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>CMD [&quot;node&quot;, &quot;app.js&quot;]</code></td></tr><tr id="236b5532-cba4-80ca-a509-c63b52a5d97f"><td id="L?gb" class=""><code>ENTRYPOINT</code></td><td id="ti^g" class="">Sets the main executable (like <code>CMD</code>, but harder to override).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>ENTRYPOINT [&quot;python3&quot;]</code></td></tr><tr id="236b5532-cba4-8056-a927-c499228e049d"><td id="L?gb" class=""><code>EXPOSE</code></td><td id="ti^g" class="">Documents the port the container listens on (for reference only).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>EXPOSE 80</code></td></tr><tr id="236b5532-cba4-8067-8ff9-dc43ece0954a"><td id="L?gb" class=""><code>VOLUME</code></td><td id="ti^g" class="">Creates a mount point with a volume attached.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>VOLUME /data</code></td></tr><tr id="236b5532-cba4-802d-b5b2-ef345d7d899c"><td id="L?gb" class=""><code>ARG</code></td><td id="ti^g" class="">Defines build-time variables (used only during image build).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>ARG VERSION=1.0.0</code></td></tr><tr id="236b5532-cba4-80bd-bf9c-ce63fbe2957f"><td id="L?gb" class=""><code>USER</code></td><td id="ti^g" class="">Sets the user that will run inside the container.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>USER appuser</code></td></tr><tr id="236b5532-cba4-80e8-995a-ca8292640fd1"><td id="L?gb" class=""><code>HEALTHCHECK</code></td><td id="ti^g" class="">Sets a command to check container health.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>HEALTHCHECK CMD curl --fail http://localhost</code></td></tr><tr id="236b5532-cba4-802f-856c-fdecfa9605ab"><td id="L?gb" class=""><code>SHELL</code></td><td id="ti^g" class="">Changes the default shell used in <code>RUN</code> commands (mostly for Windows images).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>SHELL [&quot;powershell&quot;, &quot;-command&quot;]</code></td></tr><tr id="236b5532-cba4-8012-8fc4-e710cb3dfc40"><td id="L?gb" class=""><code>ONBUILD</code></td><td id="ti^g" class="">Triggers a command in child images (used in base images meant to be extended).</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>ONBUILD RUN npm install</code></td></tr><tr id="236b5532-cba4-80d6-92ee-f97fd27a0326"><td id="L?gb" class=""><code>STOPSIGNAL</code></td><td id="ti^g" class="">Sets the system call signal that will be sent to the container to exit.</td><td id="wyK:" class="" style="width:326.9884338378906px"><code>STOPSIGNAL SIGTERM</code></td></tr></tbody></table><p id="236b5532-cba4-80d1-a97d-e9df8c364642" class="">CMD vs ENTRYPOINT<div class="indented"><p id="236b5532-cba4-80d3-b408-d76456907a0e" class="">CMD is default and can be overridden at runtime.</p><p id="236b5532-cba4-80b2-bea0-c3690b80e3f3" class="">ENTRYPOINT is always executed, and arguments passed at runtime are appended to it</p></div></p><hr id="236b5532-cba4-8096-a850-e09578f70f1e"/><blockquote id="236b5532-cba4-80c3-a2b2-d404805c8b15" class=""><strong>MySQL Dockerfile</strong></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80a0-ad43-c3cbd149be95" class="code"><code class="language-Docker">FROM mysql:latest
+LABEL maintainer=&quot;example @example.com&quot;
+# COPY init.sql /docker-entrypoint-initdb.d        
+EXPOSE 3306
+CMD [&quot;mysqld&quot;]</code></pre><p id="236b5532-cba4-808b-bcf4-f265573b2ef3" class="">ENV variables that can be used -<div class="indented"><p id="236b5532-cba4-8027-9d67-f08acdd2ba7d" class="">ENV MYSQL_ROOT_PASSWORD=12345</p><p id="236b5532-cba4-8047-9b18-e5585704d7e0" class="">ENV MYSQL_DATABASE=Database-name</p><p id="236b5532-cba4-80b2-9712-e35d7bf23366" class="">ENV MYSQL_USER=CreateUser</p><p id="236b5532-cba4-8033-bf0c-c7bd5caca4c5" class="">ENV MYSQL_PASSWORD=PasswordForUser</p></div></p><p id="236b5532-cba4-8026-93de-ef6ee9a952ef" class="">Initialization SQL Scripts<div class="indented"><p id="236b5532-cba4-807b-8767-c61b7ef207b8" class="">If you want to run custom <code>.sql</code> files at container startup:<br/>Create .sh or .sql file and COPY it in Docker image.<br/></p></div></p><hr id="236b5532-cba4-80f9-b6e9-dafa29564934"/><blockquote id="236b5532-cba4-80dd-9bb9-ca4296921407" class=""><strong>Postgres Dockerfile</strong></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8017-88b8-f46661ba6909" class="code"><code class="language-Docker">FROM postgres
+ENV POSTGRES_USER=root
+ENV POSTGRES_PASSWORD=123
+ENV POSTGRES_DB=mydatabase
+EXPOSE 5432</code></pre><p id="239b5532-cba4-8050-90bb-ead17760c1e2" class="">Build and run -<div class="indented"><p id="239b5532-cba4-800c-9003-e29c4f64dbca" class="">-<code>docker build -t data-base .</code></p><p id="239b5532-cba4-80cb-946e-c12a12d7f863" class="">-<code>docker run -d --name pdb data-base</code></p><p id="239b5532-cba4-80aa-93bf-da65d53f5b29" class="">-<code>docker exec -it pdb bash</code>  then <code>psql -U root -d mydatabase</code></p></div></p><hr id="236b5532-cba4-80c9-9c07-faeb863de33d"/><blockquote id="236b5532-cba4-802e-a3d8-fdffd8adc250" class=""><strong>MongoDB Dockerfile</strong></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8006-90d2-de22300d9288" class="code"><code class="language-Docker">FROM mongo
+ENV MONGO_INITDB_ROOT_USERNAME=root
+ENV MONGO_INITDB_ROOT_PASSWORD=123
+ENV MONGO_INITDB_DATABASE=info
+EXPOSE 27017</code></pre><p id="239b5532-cba4-802c-b3fb-d335ab606d0f" class="">Build and run -<div class="indented"><p id="239b5532-cba4-808a-8d82-eca662a7a088" class="">-<code>docker build -t mongodb .</code> </p><p id="239b5532-cba4-8021-a267-e1cb21541786" class="">-<code>docker run -d --name mdb mongodb</code></p><p id="239b5532-cba4-8026-8024-fc7e0dade8a6" class="">-<code>docker exec -it mdb mongosh -u root -p</code></p></div></p><hr id="236b5532-cba4-80ff-aba6-cb31757ecd56"/><blockquote id="236b5532-cba4-8034-aa39-c4b79b3ed319" class=""><strong>WordPress Dockerfile</strong></blockquote><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-80aa-a215-fd3d002184ef" class="code"><code class="language-Docker">FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=123
+ENV MYSQL_DATABASE=Database-name
+EXPOSE 3306
+CMD [&quot;mysqld&quot;]</code></pre><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-803d-8890-da8f242e22bd" class="code"><code class="language-Docker">FROM wordpress:latest
+ENV WORDPRESS_DB_HOST=db
+ENV WORDPRESS_DB_NAME=Database-name
+ENV WORDPRESS_DB_USER=root
+ENV WORDPRESS_DB_PASSWORD=123
+EXPOSE 80</code></pre><p id="239b5532-cba4-8051-b217-e90864ff228b" class="">Build the files and run them -<div class="indented"><p id="239b5532-cba4-80ae-b3f4-eae0ab788dea" class="">-<code>docker build -f &lt;docker-filename&gt; -t &lt;name-the-build&gt; .</code> </p><p id="239b5532-cba4-808d-9471-dac07c868d91" class="">-<code>docker run -d --name db &lt;img-name&gt;</code></p><p id="239b5532-cba4-80eb-979a-cc942d1c9507" class="">-<code>docker run -d -p &lt;port-no&gt;:80 --name &lt;container-name-you-want&gt; --link &lt;continer-name&gt;:&lt;container-img&gt; &lt;img-name&gt;</code></p></div></p><hr id="236b5532-cba4-80b4-975d-ff222649d930"/><blockquote id="236b5532-cba4-8060-acb9-e79d069342a6" class=""><strong>Node.js Dockerfile</strong></blockquote><p id="239b5532-cba4-8097-97b5-c496c8c60dcc" class="">File Structure<div class="indented"><p id="239b5532-cba4-8090-be2b-db51cacfbb04" class="">node-docker-app/<br/>├── app.js                   # Node.js app<br/>├── package.json     # Dependencies and scripts<br/>└── Dockerfile          # Docker build instructions<br/></p></div></p><p id="239b5532-cba4-80d5-a907-d1683c5db85c" class="">app.js</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-80d0-8524-c5abe111cb7f" class="code"><code class="language-JavaScript">const http = require(&#x27;http&#x27;);
+
+const server = http.createServer((req, res) =&gt; {
+  res.writeHead(200, { &#x27;Content-Type&#x27;: &#x27;text/plain&#x27; });
+  res.end(&#x27;Hello from Dockerized Node.js App!\n&#x27;);
+});
+
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, () =&gt; {
+  console.log(`Server running on port ${PORT}`);
+});</code></pre><p id="239b5532-cba4-808f-af7f-d1066e3f4fa4" class="">package.json</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8083-8b7a-f3c28933bbdf" class="code"><code class="language-JSON">{
+  &quot;name&quot;: &quot;node-docker-app&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;description&quot;: &quot;A simple Node.js app running inside Docker&quot;,
+  &quot;main&quot;: &quot;app.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node app.js&quot;
+  },
+  &quot;author&quot;: &quot;dunoo&quot;,
+  &quot;license&quot;: &quot;ISC&quot;
+}</code></pre><p id="239b5532-cba4-8044-9abd-dc90b9fd79f6" class="">Dockerfile</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-806a-ac4e-e8e15266121b" class="code"><code class="language-Docker">FROM node
+WORKDIR /usr/src/app
+COPY package.json .
+RUN npm install
+COPY app.js .
+EXPOSE 3000</code></pre><p id="239b5532-cba4-8018-a278-d338b12f513e" class="">Build and run -<div class="indented"><p id="239b5532-cba4-80ee-8ac0-f1b4f23e4f05" class="">-<code>docker build -t nodejs .</code></p><p id="239b5532-cba4-808a-8070-dd508760fa1c" class="">-<code>docker run -d -p &lt;port-you-want&gt;:3000 --name node-app nodejs</code></p></div></p><hr id="236b5532-cba4-8055-9116-c48dee07f7d7"/><blockquote id="236b5532-cba4-804c-90b7-ce87d9dc46fa" class=""><strong>Python (Flask) Dockerfile</strong></blockquote><p id="239b5532-cba4-8099-b7b3-cdcad2788361" class="">File Structure<div class="indented"><p id="239b5532-cba4-800d-a730-c75aa02154d9" class="">flask-docker-app/<br/>├── app.py                     # Flask application<br/>├── requirements.txt   # Python dependencies<br/>└── Dockerfile               # Docker instructions<br/></p></div></p><p id="239b5532-cba4-8029-a65a-d4ae7739c2e2" class="">requirements.txt</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8023-a247-f7ae520f25f0" class="code"><code class="language-Plain Text">flask</code></pre><p id="239b5532-cba4-80e9-8cbf-e06d438fc35e" class="">app.py</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8093-a922-c3217f162ea9" class="code"><code class="language-Python">from flask import Flask
+
+app = Flask(__name__)
+
+@app.route(&quot;/&quot;)
+def home():
+    return &quot;Hello from Dockerized Flask App!&quot;
+
+if __name__ == &quot;__main__&quot;:
+    app.run(host=&quot;0.0.0.0&quot;, port=5000)</code></pre><p id="239b5532-cba4-8040-b60e-c891be2daa66" class="">Dockerfile</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-80bd-a234-c3b404294b4b" class="code"><code class="language-Docker">FROM python
+WORKDIR /app
+COPY requirement.txt .
+RUN pip install --no-cache-dir  -r  requirement.txt
+COPY app.py .
+EXPOSE 5000
+CMD [&quot;python&quot;,&quot;app.py&quot;]</code></pre><p id="239b5532-cba4-80de-8a04-c1bc3d49c07e" class="">Build and run - <div class="indented"><p id="239b5532-cba4-805f-af43-d6dc00c7e682" class="">-<code>docker build -t py-app .</code></p><p id="239b5532-cba4-8063-a8ea-f2d2270e17bf" class="">-<code>docker run -d -p 5000:5000 --name py py-app</code></p></div></p><hr id="236b5532-cba4-80c3-8c4e-c73a414bc521"/><h1 id="236b5532-cba4-80fd-9ed0-ec3ff2727e90" class=""><mark class="highlight-blue"><strong>Docker-Compose</strong></mark></h1><p id="236b5532-cba4-80ee-868e-dbcb5debc679" class="">A tool to define and run multi-container Docker applications. Docker compose file are written in YAML (Yet Another Markup Language) extension. (i.e., <code>.yml</code> or <code>.yaml</code>)</p><p id="236b5532-cba4-8064-ab99-d2665c738298" class="">Format for file name, <code>docker-compose.yml</code> to configure app’s services.</p><p id="236b5532-cba4-80c4-ad18-fd42071db5a3" class="">To run: </p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80e0-9f3c-fb89c746ed3d" class="code"><code class="language-Bash">docker-compose up -d</code></pre><p id="236b5532-cba4-80c4-8f54-f66910d436dc" class="">Docker Compose Commands</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80b6-8be4-d00f1f09ff3d" class="code"><code class="language-Shell">docker-compose --version                  # Displays docker-compose version
+docker-compose up -d                      # Start in detached mode
+docker-compose down                       # Stop and remove containers, networks, volumes
+docker-compose -f composefile.yml up -d   # for file with diffrent name
+docker-compose config                     # validates docker-compose.yml file
+docker-compose -f composefile.yml config  # same as docker-compose config
+docker-compose restart                    # Restart containers
+docker-compose logs                       #	View logs of all services
+docker-compose up -d --build              # Rebuilds images &amp; starts containers in background</code></pre><p id="236b5532-cba4-80a6-ae9d-fbf5bd311aa4" class="">Basic docker-compose.yml Structure</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80f7-9081-fb3a68ea35b1" class="code"><code class="language-YAML">version: &#x27;3.9&#x27;
+
+services:
+  service_name:
+    image: or build:
+    ports:
+    environment:
+    volumes:
+    depends_on:
+    command:
+    networks:
+    container_name:
+networks:
+volumes:
+</code></pre><table id="236b5532-cba4-8098-a84f-d94319b417d0" class="simple-table"><thead class="simple-table-header"><tr id="236b5532-cba4-804f-a471-f913e8d47171"><th id="jLt?" class="simple-table-header-color simple-table-header"><strong>Directive</strong></th><th id="RWEe" class="simple-table-header-color simple-table-header" style="width:555.9884338378906px"><strong>Example / Description</strong></th></tr></thead><tbody><tr id="236b5532-cba4-802a-8f04-dc2fdd260ca3"><td id="jLt?" class=""><code>version</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Compose file format version</td></tr><tr id="236b5532-cba4-80ea-97c1-ea83c728b525"><td id="jLt?" class=""><code>services</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Defines all containers</td></tr><tr id="236b5532-cba4-80d8-a3ea-fc122a1d118e"><td id="jLt?" class=""><code>image</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Use a prebuilt image</td></tr><tr id="236b5532-cba4-8092-b3ad-fc27ab9f3ed2"><td id="jLt?" class=""><code>build</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Build from a <code>Dockerfile</code></td></tr><tr id="236b5532-cba4-80f0-8adf-f972e34f7e8d"><td id="jLt?" class=""><code>ports</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Expose container port to host (<code>&quot;8080:80&quot;</code>)</td></tr><tr id="236b5532-cba4-80fe-93fc-d5657521eff1"><td id="jLt?" class=""><code>volumes</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Map host or named volumes to containers (<code>&quot;./data:/app/data&quot;</code>)</td></tr><tr id="236b5532-cba4-8098-baac-ddd66e57b0bb"><td id="jLt?" class=""><code>environment</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Set environment variables (<code>- MYSQL_ROOT_PASSWORD=12345</code>) / (<code>MYSQL_ROOT_PASSWORD: “12345”</code>)</td></tr><tr id="236b5532-cba4-80d4-96fe-c0015b52562e"><td id="jLt?" class=""><code>command</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Override default command (like <code>CMD</code> in Dockerfile)</td></tr><tr id="236b5532-cba4-807d-9ecd-f3b4acbae087"><td id="jLt?" class=""><code>depends_on</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Specify dependency order (e.g., wait for db before starting app)</td></tr><tr id="236b5532-cba4-8050-ae80-dc3f950aa4ef"><td id="jLt?" class=""><code>networks</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Define shared communication networks for services</td></tr><tr id="236b5532-cba4-803d-bfad-e54824bbcf46"><td id="jLt?" class=""><code>restart</code></td><td id="RWEe" class="" style="width:555.9884338378906px">Auto-restart policy: <code>no</code>, <code>always</code>, <code>unless-stopped</code>, <code>on-failure</code></td></tr></tbody></table><hr id="236b5532-cba4-8066-b4d3-d19a70f3fdc4"/><ul id="236b5532-cba4-802f-b740-efdaf2909336" class="bulleted-list"><li style="list-style-type:disc"><strong>3 Tier Architecture</strong><ul id="236b5532-cba4-8032-bc03-f601850c9c7f" class="bulleted-list"><li style="list-style-type:circle">My Directory Structure<p id="236b5532-cba4-8039-92a9-c4969379562d" class="">/3arch/<br/>├── app<br/>│   └── code<br/>│       ├── test.php<br/>│       ├── submit.php<br/>├── db<br/>│   ├── Dockerfile<br/>│   └── init.sql<br/>├── docker-compose.yml<br/>└── web<br/>      ├── code<br/>      │   ├── form.html<br/>      │   └── index.html<br/>      └── config<br/>      └── default.conf<br/></p></li></ul><ul id="236b5532-cba4-8060-b9b9-db7408996349" class="bulleted-list"><li style="list-style-type:circle">docker-compose.yml</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-804a-92f8-e7b016f27335" class="code"><code class="language-YAML">services:
+  db:
+    build:
+	    context: /3arch/db/
+	    dockerfile: Dockerfile
+    container_name: db
+    volumes:
+      - myvolume:/var/lib/mysql/
+    networks:
+      - dbnet
+    healthcheck:
+      test: [&quot;CMD&quot;, &quot;mysqladmin&quot;, &quot;ping&quot;, &quot;-h&quot;, &quot;localhost&quot;]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  app:
+    image: bitnami/php-fpm
+    container_name: app
+    volumes:
+      - /3arch/app/code/:/app/
+    networks:
+      - dbnet
+      - webnet
+    depends_on:
+      - db
+  web:
+    image: nginx
+    ports:
+      - &quot;80:80&quot;
+    container_name: web
+    volumes:
+      - /3arch/web/code/:/usr/share/nginx/html/
+      - /3arch/web/config/:/etc/nginx/conf.d/
+    networks:
+      - webnet
+    depends_on:
+      - db
+      - app
+networks:
+  webnet: {}
+  dbnet: {}
+volumes:
+  myvolume: {}</code></pre><ul id="236b5532-cba4-80c2-85e8-d2fd21504fae" class="bulleted-list"><li style="list-style-type:circle">Dockerfile</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80a0-8502-ead000c555ca" class="code"><code class="language-Docker">FROM mysql
+ENV MYSQL_ROOT_PASSWORD=Pass1972
+ENV MYSQL_DATABASE=info
+COPY init.sql /docker-entrypoint-initdb.d
+EXPOSE 3306
+CMD [&quot;mysqld&quot;]</code></pre><ul id="236b5532-cba4-80c9-a0ab-e690f64fd70b" class="bulleted-list"><li style="list-style-type:circle">init.sql</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-804f-bcb5-dda8242ac791" class="code"><code class="language-SQL">use info;
+create table users(id int primary key auto_increment, name varchar(20), email varchar(20), website varchar(20), comment varchar(50), gender varchar(12));</code></pre><ul id="236b5532-cba4-80ec-a533-ebfa897e403e" class="bulleted-list"><li style="list-style-type:circle">default.conf</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80b1-909c-d0d9f6d5de68" class="code"><code class="language-Shell">server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    #error_page  404              /404.html;
+
+    # redirect server error pages to the static page /50x.html
+    #
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+    #
+    #location ~ \.php$ {
+    #    proxy_pass   http://172.21.0.2;
+    #}
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        root           /app;                                            # root html; → Defines the document root as html (this should be the folder where PHP files are stored).
+                                                                        # fastcgi_pass 127.0.0.1:9000; → Sends the request to a PHP-FPM server running on 127.0.0.1 (localhost) at port 9000. This is the default port for PHP-FPM
+                                                                        # fastcgi_index index.php; → If a directory is requested, serve index.php as the default file.
+        fastcgi_pass   app:9000;                                        # $fastcgi_script_name → This is a built-in variable that contains the requested script path (e.g., /index.php).
+        fastcgi_index  index.php;                                       # Example of How This Works: If a user requests
+        fastcgi_param  SCRIPT_FILENAME  /app/$fastcgi_script_name;      # http://example.com/index.php
+                                                                        # $fastcgi_script_name will be /index.php
+                                                                        # So /scripts$fastcgi_script_name becomes
+                                                                        # /scripts/index.php
+
+        include        fastcgi_params;
+    }
+
+    # deny access to .htaccess files, if Apache&#x27;s document root
+    # concurs with nginx&#x27;s one
+    #
+    #location ~ /\.ht {
+    #    deny  all;
+    #}
+}</code></pre><ul id="236b5532-cba4-80ab-bb8a-e9f5a10268de" class="bulleted-list"><li style="list-style-type:circle">submit.php</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-8051-97d4-db42119efc75" class="code"><code class="language-PHP">&lt;?php 
+$name=$_POST[&quot;name&quot;];
+$email=$_POST[&quot;email&quot;];
+$website= $_POST[&quot;website&quot;];
+$comment=$_POST[&quot;comment&quot;];
+$gender=$_POST[&quot;gender&quot;];
+
+echo $name;
+echo $email;
+echo $gender;
+echo $comment;
+echo $website;
+ 
+$servername = &quot;db&quot;;
+$username = &quot;root&quot;;
+$password = &quot;&quot;;
+$dbname = &quot;info&quot;;
+ 
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
+  die(&quot;Connection failed: &quot; . mysqli_connect_error());
+}
+
+$sql = &quot;INSERT INTO users (name,email,website,comment,gender)VALUES(&#x27;$name&#x27;,&#x27;$email&#x27;,&#x27;$website&#x27;,&#x27;$comment&#x27;,&#x27;$gender&#x27;)&quot;;
+
+if (mysqli_query($conn, $sql)) {
+  echo &quot;New record created successfully&quot;;
+} else {
+  echo &quot;Error: &quot; . $sql . &quot;&lt;br&gt;&quot; . mysqli_error($conn);
+}
+mysqli_close($conn);
+?&gt;</code></pre><ul id="236b5532-cba4-80f2-8088-e321215a6f25" class="bulleted-list"><li style="list-style-type:circle">form.html</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80b3-9a2d-ef52312d6421" class="code"><code class="language-HTML">&lt;!DOCTYPE HTML&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Form&lt;/title&gt;
+    &lt;style&gt;
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: &#x27;San Francisco&#x27;, -apple-system, BlinkMacSystemFont, &#x27;Segoe UI&#x27;, Roboto, Oxygen, Ubuntu, Cantarell, &#x27;Open Sans&#x27;, &#x27;Helvetica Neue&#x27;, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #000, #1b1b1b);
+            color: white;
+            padding: 20px;
+        }
+
+        /* Glassmorphism Effect */
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Title */
+        h2 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0;
+            animation: fadeIn 1.2s ease-in-out forwards;
+        }
+
+        /* Form Input Fields */
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            outline: none;
+            opacity: 0;
+            animation: fadeInUp 1s ease-in-out forwards;
+        }
+
+        textarea {
+            resize: none;
+            height: 100px;
+        }
+
+        /* Gender Selection */
+        .gender-options {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+            opacity: 0;
+            animation: fadeInUp 1.2s ease-in-out forwards;
+        }
+
+        .gender-options label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .gender-options input {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        /* Submit Button */
+        input[type=&quot;submit&quot;] {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            background: linear-gradient(145deg, #1e1e1e, #282828);
+            box-shadow: 5px 5px 15px #0a0a0a, -5px -5px 15px #333;
+            color: #fff;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInUp 1.4s ease-in-out forwards;
+        }
+
+        input[type=&quot;submit&quot;]:hover {
+            background: linear-gradient(145deg, #282828, #1e1e1e);
+            box-shadow: 3px 3px 10px #000, -3px -3px 10px #3a3a3a;
+            transform: scale(1.02);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div class=&quot;form-container&quot;&gt;
+    &lt;h2&gt;Form&lt;/h2&gt;
+    &lt;form method=&quot;post&quot; action=&quot;submit.php&quot;&gt;
+        &lt;input type=&quot;text&quot; name=&quot;name&quot; id=&quot;name&quot; placeholder=&quot;Your Name&quot; required&gt;
+        &lt;input type=&quot;email&quot; name=&quot;email&quot; id=&quot;email&quot; placeholder=&quot;Your Email&quot; required&gt;
+        &lt;input type=&quot;text&quot; name=&quot;website&quot; id=&quot;website&quot; placeholder=&quot;Your Website (Optional)&quot;&gt;
+        &lt;textarea name=&quot;comment&quot; id=&quot;comment&quot; placeholder=&quot;Your Feedback&quot; required&gt;&lt;/textarea&gt;
+
+        &lt;div class=&quot;gender-options&quot;&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;female&quot; required&gt; Female&lt;/label&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;male&quot; required&gt; Male&lt;/label&gt;
+            &lt;label&gt;&lt;input type=&quot;radio&quot; name=&quot;gender&quot; value=&quot;other&quot; required&gt; Other&lt;/label&gt;
+        &lt;/div&gt;
+
+        &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;Submit&quot;&gt;
+    &lt;/form&gt;
+&lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</code></pre></li></ul><hr id="236b5532-cba4-80be-a57e-e57bad734d8d"/><ul id="236b5532-cba4-8067-ab54-ff80e93a07c1" class="bulleted-list"><li style="list-style-type:disc"><strong>Flask App + MySQL</strong><ul id="239b5532-cba4-809a-8779-c5f30091a3a8" class="bulleted-list"><li style="list-style-type:circle">My Directory Structure<p id="239b5532-cba4-8049-8fa4-e2e8a1a0a88a" class="">flask-sql/<br/>├── app/<br/>│   ├── app.py<br/>│   ├── requirements.txt<br/>│   └── Dockerfile<br/>├── docker-compose.yml<br/>└── init.sql<br/></p></li></ul><ul id="239b5532-cba4-8001-b810-e86ed30dd690" class="bulleted-list"><li style="list-style-type:circle">app.py</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-802e-ab25-ea8de1441530" class="code"><code class="language-Python">from flask import Flask, jsonify
+import mysql.connector
+
+app = Flask(__name__)
+
+@app.route(&#x27;/&#x27;)
+def hello():
+    try:
+        conn = mysql.connector.connect(
+            host=&#x27;db-sql&#x27;,
+            user=&#x27;root&#x27;,
+            password=&#x27;123&#x27;,
+            database=&#x27;myapp&#x27;
+        )
+        cursor = conn.cursor()
+        cursor.execute(&quot;SELECT message FROM greetings LIMIT 1;&quot;)
+        result = cursor.fetchone()
+        return jsonify({&quot;message&quot;: result[0]})
+    except Exception as e:
+        return jsonify({&quot;error&quot;: str(e)})
+
+if __name__ == &#x27;__main__&#x27;:
+    app.run(host=&#x27;0.0.0.0&#x27;, port=5000)</code></pre><ul id="239b5532-cba4-8092-84df-c838659869ef" class="bulleted-list"><li style="list-style-type:circle">requirement.txt</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8068-becb-d49c4891686b" class="code"><code class="language-Plain Text">flask
+mysql-connector-python</code></pre><ul id="239b5532-cba4-80ff-b536-e3f52307596b" class="bulleted-list"><li style="list-style-type:circle">Dockerfile</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8060-a3d8-e88b856ab8e3" class="code"><code class="language-Docker">FROM python
+WORKDIR /app
+COPY requirement.txt .
+RUN pip install --no-cache-dir -r requirement.txt
+COPY app.py .
+EXPOSE 5000
+CMD [&quot;python&quot;,&quot;app.py&quot;]</code></pre><ul id="239b5532-cba4-803e-bc01-dab0afbd7de7" class="bulleted-list"><li style="list-style-type:circle">docker-compose.yml</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-80e4-b738-fe9090414437" class="code"><code class="language-YAML">services:
+  flask-app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: flask-app
+    depends_on:
+        - db-sql
+    networks:
+      - appnet
+    ports:
+      - &quot;5000:5000&quot;
+  db-sql:
+    image: mysql
+    ports:
+      - &quot;3306&quot;
+    container_name: db-sql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123
+      - MYSQL_DATABASE=myapp
+    networks:
+      - appnet
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - volume1sql:/var/lib/mysql
+networks:
+  appnet: {}
+volumes:
+  volume1sql: {}</code></pre><ul id="239b5532-cba4-80a0-9854-fe6082f5c8b0" class="bulleted-list"><li style="list-style-type:circle">init.sql</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8007-9448-cb3899e66b2d" class="code"><code class="language-SQL">CREATE DATABASE IF NOT EXISTS myapp;
+USE myapp;
+CREATE TABLE greetings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    message VARCHAR(250) NOT NULL
+);
+INSERT INTO greetings (message) VALUES (&#x27;Hello from Flask + MySQL!&#x27;);</code></pre></li></ul><hr id="236b5532-cba4-8027-bb0d-c389d481e42c"/><ul id="236b5532-cba4-800b-bcb7-df8c4dd9c926" class="bulleted-list"><li style="list-style-type:disc"><strong>Node.js + MongoDB</strong><ul id="239b5532-cba4-804f-aad0-f4732b3dbf19" class="bulleted-list"><li style="list-style-type:circle">My Directory Structure<p id="239b5532-cba4-80e9-a3d8-de345f4d3ca9" class="">nodejs-mongodb<br/>├── app<br/>│   ├── Dockerfile<br/>│   ├── app.js<br/>│   └── package.json<br/>└── docker-compose.yml<br/></p></li></ul><ul id="239b5532-cba4-8010-b319-d077c00e760c" class="bulleted-list"><li style="list-style-type:circle">Dockerfile</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8084-b752-c6888b3291cb" class="code"><code class="language-Docker">FROM node
+WORKDIR /app
+COPY package.json .
+RUN npm install
+COPY app.js .
+EXPOSE 3000
+CMD [&quot;npm&quot;,&quot;start&quot;]</code></pre><ul id="239b5532-cba4-804b-b313-ead35171d2aa" class="bulleted-list"><li style="list-style-type:circle">app.js</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8036-91f5-c10172a01255" class="code"><code class="language-JavaScript">const express = require(&#x27;express&#x27;);
+const mongoose = require(&#x27;mongoose&#x27;);
+
+const app = express();
+const port = 3000;
+
+// MongoDB connection         password-and-host-and-user
+mongoose.connect(&#x27;mongodb://root:123@mongo-db:27017/mydb?authSource=admin&#x27;, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+const db = mongoose.connection;
+db.on(&#x27;error&#x27;, console.error.bind(console, &#x27;MongoDB connection error:&#x27;));
+db.once(&#x27;open&#x27;, () =&gt; console.log(&#x27;Connected to MongoDB&#x27;));
+
+// Define a sample schema and model
+const UserSchema = new mongoose.Schema({ name: String });
+const User = mongoose.model(&#x27;User&#x27;, UserSchema);
+
+// Route
+app.get(&#x27;/&#x27;, async (req, res) =&gt; {
+  const user = await User.create({ name: &#x27;Luffy&#x27; });
+  res.json({ message: &#x27;User added!&#x27;, user });
+});
+
+app.listen(port, () =&gt; {
+  console.log(`App listening on port ${port}`);
+});</code></pre><ul id="239b5532-cba4-8028-8549-e1e738a66281" class="bulleted-list"><li style="list-style-type:circle">package.json</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-807e-b46b-ddf4b6473023" class="code"><code class="language-JSON">{
+  &quot;name&quot;: &quot;node-mongo-app&quot;,
+  &quot;version&quot;: &quot;1.0.0&quot;,
+  &quot;main&quot;: &quot;app.js&quot;,
+  &quot;scripts&quot;: {
+    &quot;start&quot;: &quot;node app.js&quot;
+  },
+  &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;^4.18.0&quot;,
+    &quot;mongoose&quot;: &quot;^7.0.0&quot;
+  }
+}</code></pre><ul id="239b5532-cba4-8094-a4d3-dc461dd5d4f7" class="bulleted-list"><li style="list-style-type:circle">docker-compose.yml</li></ul><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="239b5532-cba4-8051-ac55-e830f3856aae" class="code"><code class="language-JSON">services:
+  mongo-db:
+    image: mongo
+    ports:
+      - &quot;27017:27017&quot;
+    container_name: mongo-db
+    environment:
+      - MONGO_INITDB_ROOT_PASSWORD=123
+      - MONGO_INITDB_ROOT_USERNAME=root
+    networks:
+      - node-mongo
+    volumes:
+      - mongodb:/data/db
+  node-js:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: node-js
+    ports:
+      - &quot;80:3000&quot;
+    networks:
+      - node-mongo
+    depends_on:
+      - mongo-db
+volumes:
+  mongodb: {}
+networks:
+  node-mongo: {}</code></pre></li></ul><hr id="236b5532-cba4-8048-9a85-daffe4a98986"/><h1 id="236b5532-cba4-8021-b3b4-cd0e692eb215" class=""><mark class="highlight-blue"><strong>Portainer</strong></mark></h1><p id="236b5532-cba4-8061-bd07-e33595dd59b2" class="">Portainer is a lightweight management UI that allows to <strong>easily </strong>manage Docker environments (containers, images, networks, volumes, etc.) via a web interface.</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="236b5532-cba4-80db-9fdf-d51b2235e4f7" class="code"><code class="language-Shell">docker volume create data
+docker run -d -v /var/run/docker.sock:/var/run/docker.sock -v data:/data -p 9000:9000 -p 9443:9443 --name portainer-ui portainer/portainer
+# Runs Portainer (a Docker GUI) in detached mode:
+#   - Mounts Docker socket to manage Docker.
+#   - Stores data in data volume.
+#   - Exposes web UI on ports 9000 (HTTP) and 9443 (HTTPS).
+#   - Names the container portainer-ui.</code></pre></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
