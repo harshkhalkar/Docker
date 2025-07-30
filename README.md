@@ -1,10 +1,10 @@
-# 🐳 Docker
+# Docker
 
 This repository contains a multi-container Docker along with a simple HTML & pdf, file documenting a personal Docker journey.
 
 ---
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```bash
 Docker/
