@@ -9,7 +9,7 @@ This repository contains a multi-container Docker along with a simple HTML & pdf
 ```bash
 Docker/
 ├── docs/
-│ └── index.htm                         # Personal documentation (A HTML version of .pdf)
+│ └── index.html                        # Personal documentation (A HTML version of .pdf)
 ├── docker-compose/                     # Multi Docker App
 │ └── *
 ├── .gitignore
