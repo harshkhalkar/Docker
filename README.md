@@ -8,7 +8,7 @@ This repository contains a multi-container Docker along with a simple HTML & pdf
 
 ```bash
 Docker/
-├── html/
+├── docs/
 │ └── My-Docker-Journey.htm             # Personal documentation (A HTML version of .pdf)
 ├── docker-compose/                     # Multi Docker App
 │ └── *
